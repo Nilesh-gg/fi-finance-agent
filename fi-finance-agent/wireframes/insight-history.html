@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fi Finance Agent - Insight History</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+        
+        .wireframe {
+            border: 2px solid #ddd;
+            background: white;
+            margin: 10px;
+            position: relative;
+        }
+        
+        .wireframe::before {
+            content: attr(data-label);
+            position: absolute;
+            top: -20px;
+            left: 0;
+            background: #007bff;
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .breadcrumb {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .history-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #007bff;
+            transition: transform 0.2s;
+        }
+        
+        .history-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .query-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .timestamp {
+            color: #666;
+            font-size: 12px;
+            text-align: right;
+        }
+        
+        .insight-type {
+            display: inline-block;
+            background: #e7f3ff;
+            color: #007bff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .summary-preview {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-outline {
+            background: white;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .filter-dropdown {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .powered-by {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 6px;
+            color: #155724;
+            font-size: 12px;
+        }
+        
+        .powered-by strong {
+            color: #0d4b14;
+        }
+        
+        .metric-badge {
+            display: inline-block;
+            background: #f8f9fa;
+            color: #666;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+        
+        .metric-badge.positive {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .metric-badge.negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="wireframe" data-label="INSIGHT HISTORY VIEW">
+        <div class="container">
+            <div class="header">
+                <div>
+                    <h1>📊 Insight History</h1>
+                    <div class="breadcrumb">Dashboard > History</div>
+                </div>
+                <div class="filters">
+                    <select class="filter-dropdown">
+                        <option>All Types</option>
+                        <option>Projection</option>
+                        <option>Investment Suggestion</option>
+                        <option>Goal Plan</option>
+                        <option>Analysis</option>
+                    </select>
+                    <select class="filter-dropdown">
+                        <option>Last 30 Days</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 3 Months</option>
+                        <option>All Time</option>
+                    </select>
+                    <input type="text" class="search-box" placeholder="Search insights...">
+                </div>
+            </div>
+            
+            <div class="history-grid">
+                <div class="history-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="query-text">Can I afford ₹50L home loan?</div>
+                            <div class="insight-type">Goal Plan</div>
+                        </div>
+                        <div class="timestamp">
+                            2 hours ago
+                        </div>
+                    </div>
+                    <div class="summary-preview">
+                        Based on your current financial position, you can comfortably afford a ₹45L home loan. Your EMI would be ₹38,000/month, leaving you with ₹22,000 surplus after all expenses.
+                        <br><br>
+                        <span class="metric-badge positive">Loan-to-Income: 32%</span>
+                        <span class="metric-badge positive">EMI-to-Income: 38%</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Re-run Analysis</button>
+                        <button class="btn btn-outline">Export</button>
+                        <button class="btn btn-secondary">Compare</button>
+                    </div>
+                </div>
+                
+                <div class="history-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="query-text">What's my SIP performance this year?</div>
+                            <div class="insight-type">Performance Analysis</div>
+                        </div>
+                        <div class="timestamp">
+                            1 day ago
+                        </div>
+                    </div>
+                    <div class="summary-preview">
+                        Your SIPs have generated ₹1,25,000 in returns (15.2% growth) this year. HDFC Top 100 Fund is your best performer with 18.1% returns, while SBI Small Cap Fund underperformed at -10%.
+                        <br><br>
+                        <span class="metric-badge positive">Total Returns: +₹1,25,000</span>
+                        <span class="metric-badge negative">vs Market: -4.5%</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Re-run Analysis</button>
+                        <button class="btn btn-outline">Export</button>
+                        <button class="btn btn-secondary">Compare</button>
+                    </div>
+                </div>
+                
+                <div class="history-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="query-text">How much will I have at retirement?</div>
+                            <div class="insight-type">Projection</div>
+                        </div>
+                        <div class="timestamp">
+                            3 days ago
+                        </div>
+                    </div>
+                    <div class="summary-preview">
+                        At your current savings rate of ₹25,000/month, you'll have approximately ₹3.2 crores by age 60. This includes EPF (₹1.1 cr), mutual funds (₹1.8 cr), and other investments (₹30L).
+                        <br><br>
+                        <span class="metric-badge positive">Projected Corpus: ₹3.2 cr</span>
+                        <span class="metric-badge">Monthly SIP: ₹25,000</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Re-run Analysis</button>
+                        <button class="btn btn-outline">Export</button>
+                        <button class="btn btn-secondary">Compare</button>
+                    </div>
+                </div>
+                
+                <div class="history-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="query-text">Should I prepay my home loan?</div>
+                            <div class="insight-type">Investment Suggestion</div>
+                        </div>
+                        <div class="timestamp">
+                            1 week ago
+                        </div>
+                    </div>
+                    <div class="summary-preview">
+                        With your home loan at 8.5% interest and current investment returns averaging 12%, it's better to continue investments rather than prepaying. You can save ₹2.8L in interest over 10 years.
+                        <br><br>
+                        <span class="metric-badge positive">Better ROI: +3.5%</span>
+                        <span class="metric-badge positive">Tax Benefits: ₹46,800/year</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Re-run Analysis</button>
+                        <button class="btn btn-outline">Export</button>
+                        <button class="btn btn-secondary">Compare</button>
+                    </div>
+                </div>
+                
+                <div class="history-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="query-text">Tax optimization strategies for this year</div>
+                            <div class="insight-type">Recommendation</div>
+                        </div>
+                        <div class="timestamp">
+                            2 weeks ago
+                        </div>
+                    </div>
+                    <div class="summary-preview">
+                        You can save ₹78,000 in taxes this year by maximizing 80C deductions (₹1.5L), investing in ELSS funds (₹50,000), and claiming HRA benefits (₹2.4L annually).
+                        <br><br>
+                        <span class="metric-badge positive">Tax Savings: ₹78,000</span>
+                        <span class="metric-badge">80C Remaining: ₹50,000</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Re-run Analysis</button>
+                        <button class="btn btn-outline">Export</button>
+                        <button class="btn btn-secondary">Compare</button>
+                    </div>
+                </div>
+                
+                <div class="history-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="query-text">Emergency fund adequacy check</div>
+                            <div class="insight-type">Analysis</div>
+                        </div>
+                        <div class="timestamp">
+                            3 weeks ago
+                        </div>
+                    </div>
+                    <div class="summary-preview">
+                        Your emergency fund of ₹4.2L covers 6.8 months of expenses, which is above the recommended 6 months. Consider moving ₹1L to higher-yield investments while maintaining ₹3.2L emergency buffer.
+                        <br><br>
+                        <span class="metric-badge positive">Coverage: 6.8 months</span>
+                        <span class="metric-badge">Recommended: 6 months</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Re-run Analysis</button>
+                        <button class="btn btn-outline">Export</button>
+                        <button class="btn btn-secondary">Compare</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="powered-by">
+                <strong>Powered by Google Cloud + Vertex AI</strong>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

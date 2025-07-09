@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fi Finance Agent - Login & Onboarding Wireframe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+        
+        .wireframe {
+            border: 2px solid #ddd;
+            background: white;
+            margin: 10px;
+            position: relative;
+            min-height: 600px;
+        }
+        
+        .wireframe::before {
+            content: attr(data-label);
+            position: absolute;
+            top: -20px;
+            left: 0;
+            background: #007bff;
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin: 20px;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .feature-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .feature-description {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .login-form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
+        .google-login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+        
+        .google-login-btn:hover {
+            background: #357ae8;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .terms-text {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .terms-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        .step.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .step.completed {
+            background: #28a745;
+            color: white;
+        }
+        
+        .step::after {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 50%;
+            width: 40px;
+            height: 2px;
+            background: #e0e0e0;
+        }
+        
+        .step:last-child::after {
+            display: none;
+        }
+        
+        .step.completed::after {
+            background: #28a745;
+        }
+        
+        .onboarding-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .card-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .fi-connect-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .fi-logo {
+            width: 80px;
+            height: 80px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .connect-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .connect-btn:hover {
+            background: #0056b3;
+        }
+        
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: #e8f5e8;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #155724;
+        }
+        
+        .permissions-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .permission-item:last-child {
+            border-bottom: none;
+        }
+        
+        .permission-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #007bff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .permission-text {
+            flex: 1;
+            font-size: 14px;
+        }
+        
+        .permission-status {
+            color: #28a745;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .success-animation {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #28a745;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            animation: bounce 0.6s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .getting-started {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .getting-started h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .getting-started ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .getting-started li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .getting-started li::before {
+            content: '✓';
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .export-controls {
+            margin-top: 20px;
+        }
+        
+        .toggle-section {
+            margin-bottom: 30px;
+        }
+        
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .toggle-checkbox {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .insights-table {
+            margin-bottom: 30px;
+        }
+        
+        .insights-table h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        .preview-table th,
+        .preview-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .preview-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .export-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline {
+            background: white;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+        
+        .btn-outline:hover {
+            background: #007bff;
+            color: white;
+        }
+        
+        .model-section {
+            margin-bottom: 20px;
+        }
+        
+        .model-section h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .powered-by-footer {
+            text-align: center;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 6px;
+            color: #155724;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-grid">
+        <!-- Login Page -->
+        <div class="wireframe" data-label="LOGIN PAGE">
+            <div class="container">
+                <div class="login-header">
+                    <div class="logo">Fi Finance Agent</div>
+                    <div class="subtitle">Your AI-Powered Financial Advisor</div>
+                </div>
+                
+                <div class="feature-highlight">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">Intelligent Financial Insights</div>
+                    <div class="feature-description">
+                        Get personalized advice based on your complete financial picture from Fi's comprehensive data
+                    </div>
+                </div>
+                
+                <div class="login-form">
+                    <button class="google-login-btn">
+                        <span>G</span>
+                        Continue with Google
+                    </button>
+                    
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Enter your password">
+                    </div>
+                    
+                    <button class="btn-primary">Sign In</button>
+                    
+                    <div class="terms-text">
+                        By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onboarding Step 1 -->
+        <div class="wireframe" data-label="ONBOARDING STEP 1">
+            <div class="container">
+                <div class="step-indicator">
+                    <div class="step active">1</div>
+                    <div class="step">2</div>
+                    <div class="step">3</div>
+                </div>
+                
+                <div class="onboarding-card">
+                    <div class="card-header">
+                        <div class="card-title">Welcome to Fi Finance Agent!</div>
+                        <div class="card-subtitle">Let's set up your personalized financial AI advisor</div>
+                    </div>
+                    
+                    <div class="fi-connect-section">
+                        <div class="fi-logo">Fi</div>
+                        <h3>Connect Your Fi Account</h3>
+                        <p style="color: #666; margin: 15px 0;">
+                            To provide personalized insights, we need secure access to your financial data through Fi's MCP server.
+                        </p>
+                        <button class="connect-btn">Connect Fi Account</button>
+                        
+                        <div class="security-badges">
+                            <div class="badge">
+                                <span>🔒</span>
+                                <span>Bank-level Security</span>
+                            </div>
+                            <div class="badge">
+                                <span>🛡️</span>
+                                <span>Read-only Access</span>
+                            </div>
+                            <div class="badge">
+                                <span>🔐</span>
+                                <span>Encrypted Data</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="permissions-list">
+                        <h4 style="margin-bottom: 15px;">What we'll access:</h4>
+                        <div class="permission-item">
+                            <div class="permission-icon">💰</div>
+                            <div class="permission-text">Net worth and asset allocation</div>
+                            <div class="permission-status">Secure</div>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-icon">📈</div>
+                            <div class="permission-text">Investment portfolio and performance</div>
+                            <div class="permission-status">Secure</div>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-icon">💳</div>
+                            <div class="permission-text">Liabilities and debt information</div>
+                            <div class="permission-status">Secure</div>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-icon">🏦</div>
+                            <div class="permission-text">EPF and retirement savings</div>
+                            <div class="permission-status">Secure</div>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-icon">📊</div>
+                            <div class="permission-text">Credit score and financial health</div>
+                            <div class="permission-status">Secure</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-secondary">Skip for Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onboarding Step 2 -->
+        <div class="wireframe" data-label="ONBOARDING STEP 2">
+            <div class="container">
+                <div class="step-indicator">
+                    <div class="step completed">1</div>
+                    <div class="step active">2</div>
+                    <div class="step">3</div>
+                </div>
+                
+                <div class="onboarding-card">
+                    <div class="card-header">
+                        <div class="card-title">Set Your Financial Goals</div>
+                        <div class="card-subtitle">Help us understand your financial priorities</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Primary Financial Goal</label>
+                        <select class="form-input">
+                            <option>Select your main goal</option>
+                            <option>Home Purchase</option>
+                            <option>Retirement Planning</option>
+                            <option>Emergency Fund</option>
+                            <option>Child's Education</option>
+                            <option>Debt Payoff</option>
+                            <option>Wealth Building</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Target Amount</label>
+                        <input type="text" class="form-input" placeholder="₹50,00,000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Timeline</label>
+                        <select class="form-input">
+                            <option>Select timeline</option>
+                            <option>1-2 years</option>
+                            <option>3-5 years</option>
+                            <option>5-10 years</option>
+                            <option>10+ years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Risk Tolerance</label>
+                        <select class="form-input">
+                            <option>Select risk level</option>
+                            <option>Conservative (Low Risk)</option>
+                            <option>Moderate (Medium Risk)</option>
+                            <option>Aggressive (High Risk)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-primary">Continue</button>
+                    <button class="btn-secondary">Skip for Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onboarding Step 3 -->
+        <div class="wireframe" data-label="ONBOARDING STEP 3">
+            <div class="container">
+                <div class="step-indicator">
+                    <div class="step completed">1</div>
+                    <div class="step completed">2</div>
+                    <div class="step active">3</div>
+                </div>
+                
+                <div class="onboarding-card">
+                    <div class="success-animation">
+                        <div class="success-icon">✓</div>
+                        <div class="card-title">You're All Set!</div>
+                        <div class="card-subtitle">Your AI financial advisor is ready to help you achieve your goals</div>
+                    </div>
+                    
+                    <div class="getting-started">
+                        <h3>Here's what you can do now:</h3>
+                        <ul>
+                            <li>Ask about your net worth and investment performance</li>
+                            <li>Get personalized recommendations for your portfolio</li>
+                            <li>Plan for major financial goals like home purchase</li>
+                            <li>Optimize your debt repayment strategy</li>
+                            <li>Track your progress toward financial goals</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #e7f3ff; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                        <strong>💡 Pro Tip:</strong> Start by asking "How is my financial health?" to get a comprehensive overview of your current situation.
+                    </div>
+                    
+                    <button class="btn-primary">Start Using Fi Finance Agent</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Export + Control Screen -->
+        <div class="wireframe" data-label="EXPORT + CONTROL SCREEN">
+            <div class="container">
+                <div class="onboarding-card">
+                    <div class="card-header">
+                        <div class="card-title">Export + Control</div>
+                        <div class="card-subtitle">Data portability and user ownership</div>
+                    </div>
+                    
+                    <div class="export-controls">
+                        <div class="toggle-section">
+                            <label class="toggle-label">
+                                <input type="checkbox" class="toggle-checkbox" checked>
+                                <span class="toggle-slider"></span>
+                                Allow export to Google Sheets / PDF
+                            </label>
+                        </div>
+                        
+                        <div class="insights-table">
+                            <h4>Generated Insights Preview</h4>
+                            <table class="preview-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Query</th>
+                                        <th>Insight Type</th>
+                                        <th>Summary</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2024-07-09</td>
+                                        <td>SIP Performance</td>
+                                        <td>Analysis</td>
+                                        <td>Underperformed by 4.5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-07-08</td>
+                                        <td>Home Loan Affordability</td>
+                                        <td>Goal Plan</td>
+                                        <td>Can afford ₹45L loan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-07-07</td>
+                                        <td>Net Worth Trend</td>
+                                        <td>Projection</td>
+                                        <td>Growing at 12% annually</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="export-actions">
+                            <button class="btn btn-primary">📊 Export to Google Sheets</button>
+                            <button class="btn btn-secondary">📄 Download PDF</button>
+                            <button class="btn btn-outline">📋 Export CSV</button>
+                            <button class="btn btn-outline">🔗 Export JSON</button>
+                        </div>
+                        
+                        <div class="model-section">
+                            <h4>AI Model Options</h4>
+                            <button class="btn btn-outline">🔗 Connect with another model</button>
+                        </div>
+                    </div>
+                    
+                    <div class="powered-by-footer">
+                        <strong>Powered by Google Cloud + Vertex AI</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

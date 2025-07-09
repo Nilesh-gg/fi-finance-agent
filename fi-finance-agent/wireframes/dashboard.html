@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fi Finance Agent - Dashboard Wireframe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+        
+        .wireframe {
+            border: 2px solid #ddd;
+            background: white;
+            margin: 10px;
+            position: relative;
+        }
+        
+        .wireframe::before {
+            content: attr(data-label);
+            position: absolute;
+            top: -20px;
+            left: 0;
+            background: #007bff;
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            height: 70px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            gap: 20px;
+            height: calc(100vh - 110px);
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            padding: 12px 16px;
+            margin: 5px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .nav-item:hover {
+            background: #f0f8ff;
+        }
+        
+        .nav-item.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .center-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .financial-overview {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .chat-interface {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            margin: 15px 0;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            background: #007bff;
+            color: white;
+            margin-left: auto;
+        }
+        
+        .message.ai {
+            background: #f1f3f4;
+            color: #333;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+        }
+        
+        .send-btn {
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .insights-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .quick-actions {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: #f8f9fa;
+            border-color: #007bff;
+        }
+        
+        .suggestions-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .suggestion-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .chart-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            margin: 20px 0;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4CAF50;
+            margin-right: 8px;
+        }
+        
+        .fi-connection {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .export-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .export-btn {
+            padding: 8px 16px;
+            border: 1px solid #007bff;
+            color: #007bff;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .export-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+        
+        .suggestion-cards {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .suggestion-card {
+            flex: 1;
+        }
+        
+        .suggestion-btn {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #007bff;
+            background: white;
+            color: #007bff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .suggestion-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+        
+        .query-input-section {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .query-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .analyze-btn {
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .insights-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .insight-card {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #f8f9fa;
+            transition: box-shadow 0.3s;
+        }
+        
+        .insight-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .insight-card h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .insight-card p {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .insight-date {
+            color: #999;
+            font-size: 11px;
+        }
+        
+        .export-insights-btn {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .export-insights-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="wireframe" data-label="MAIN DASHBOARD">
+                <div class="header">
+                    <div class="logo">Fi Finance Agent</div>
+                    <div class="user-menu">
+                        <span>Hi, Tanwi 👋</span>
+                        <div class="avatar">T</div>
+                    </div>
+                </div>
+        
+        <div class="container">
+            <div class="main-content">
+                <!-- Left Sidebar -->
+                <div class="sidebar wireframe" data-label="NAVIGATION">
+                    <div class="fi-connection">
+                        <div class="status-indicator"></div>
+                        <span>Fi Account Connected</span>
+                    </div>
+                    
+                    <nav>
+                        <div class="nav-item active">📊 Dashboard</div>
+                        <div class="nav-item">💰 Net Worth</div>
+                        <div class="nav-item">📈 Investments</div>
+                        <div class="nav-item">💳 Liabilities</div>
+                        <div class="nav-item">🏦 EPF</div>
+                        <div class="nav-item">📋 Credit Score</div>
+                        <div class="nav-item">🎯 Goals</div>
+                        <div class="nav-item">📊 Reports</div>
+                        <div class="nav-item">⚙️ Settings</div>
+                    </nav>
+                </div>
+                
+                <!-- Center Panel -->
+                <div class="center-panel">
+                    <!-- Suggested Prompts Section -->
+                    <div class="financial-overview wireframe" data-label="SUGGESTED PROMPTS">
+                        <h2>Suggested Prompts:</h2>
+                        <div class="suggestion-cards">
+                            <div class="suggestion-card">
+                                <button class="suggestion-btn">"How's my net worth trending?"</button>
+                            </div>
+                            <div class="suggestion-card">
+                                <button class="suggestion-btn">"Can I afford a ₹50L home loan?"</button>
+                            </div>
+                        </div>
+                        <div class="query-input-section">
+                            <input type="text" class="query-input" placeholder="Ask Your Own" />
+                            <button class="analyze-btn">Analyze</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Last 3 Insights -->
+                    <div class="financial-overview wireframe" data-label="LAST 3 INSIGHTS">
+                        <h2>View last 3 insights</h2>
+                        <div class="insights-cards">
+                            <div class="insight-card">
+                                <h4>Portfolio Performance</h4>
+                                <p>Your investments outperformed market by 2.3%</p>
+                                <span class="insight-date">2 days ago</span>
+                            </div>
+                            <div class="insight-card">
+                                <h4>SIP Recommendation</h4>
+                                <p>Consider increasing SIP by ₹5000 based on surplus</p>
+                                <span class="insight-date">5 days ago</span>
+                            </div>
+                            <div class="insight-card">
+                                <h4>Home Loan Analysis</h4>
+                                <p>You can afford ₹45L home loan comfortably</p>
+                                <span class="insight-date">1 week ago</span>
+                            </div>
+                        </div>
+                        <button class="export-insights-btn">Export insights</button>
+                    </div>
+                    
+                    <!-- Chat Interface -->
+                    <div class="chat-interface wireframe" data-label="AI CHAT">
+                        <div class="chat-header">
+                            <h3>💬 Ask Your Financial AI</h3>
+                            <p>Get personalized insights about your finances</p>
+                        </div>
+                        
+                        <div class="chat-messages">
+                            <div class="message ai">
+                                Hello! I'm your AI financial advisor. I can help you analyze your financial data, plan for goals, and optimize your investments. What would you like to know?
+                            </div>
+                            <div class="message user">
+                                How is my net worth performing compared to last month?
+                            </div>
+                            <div class="message ai">
+                                Great question! Your net worth has increased by ₹85,000 (3.5%) compared to last month. This growth is primarily due to:
+                                <br>• Mutual fund gains: ₹45,000
+                                <br>• Salary credit: ₹65,000
+                                <br>• Reduced credit card debt: ₹25,000
+                                <br><br>
+                                Your investment portfolio is performing well, with equity mutual funds showing strong returns. Keep up the excellent saving habits!
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input">
+                            <input type="text" placeholder="Ask about your finances...">
+                            <button class="send-btn">Send</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Panel -->
+                <div class="right-panel">
+                    <!-- AI Insights -->
+                    <div class="insights-panel wireframe" data-label="AI INSIGHTS">
+                        <h3>🤖 AI Insights</h3>
+                        <div class="suggestions-list">
+                            <div class="suggestion-item">
+                                <strong>Investment Opportunity</strong>
+                                <p>Consider increasing your SIP by ₹5,000 based on your surplus cash flow</p>
+                            </div>
+                            <div class="suggestion-item">
+                                <strong>Debt Optimization</strong>
+                                <p>You can save ₹12,000 in interest by prepaying your personal loan</p>
+                            </div>
+                            <div class="suggestion-item">
+                                <strong>Goal Alert</strong>
+                                <p>You're on track to reach your home loan goal by 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="quick-actions wireframe" data-label="QUICK ACTIONS">
+                        <h3>⚡ Quick Actions</h3>
+                        <button class="action-btn">💰 Check investment performance</button>
+                        <button class="action-btn">🏠 Calculate home loan affordability</button>
+                        <button class="action-btn">📊 Generate financial report</button>
+                        <button class="action-btn">🎯 Set financial goal</button>
+                        <button class="action-btn">💳 Optimize debt strategy</button>
+                    </div>
+                    
+                    <!-- Export Options -->
+                    <div class="insights-panel wireframe" data-label="EXPORT">
+                        <h3>📤 Export Data</h3>
+                        <p>Export your financial insights and reports</p>
+                        <div class="export-options">
+                            <button class="export-btn">📊 Google Sheets</button>
+                            <button class="export-btn">📄 PDF Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
